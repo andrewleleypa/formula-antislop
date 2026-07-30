@@ -80,8 +80,8 @@ alguien lo necesita.
 
 > **Cada criterio necesita un medidor, y el medidor necesita su propia prueba.**
 
-No es prudencia teórica. Es la conclusión de que **seis instrumentos mintieron en este mismo
-proyecto**, y cinco de los seis produjeron números con cara de dato:
+No es prudencia teórica. Es la conclusión de que **siete instrumentos mintieron en este mismo
+proyecto**, y seis de los siete llegaron a producir un número con cara de dato:
 
 | # | qué hizo el instrumento | cómo se descubrió |
 |---|---|---|
@@ -91,6 +91,16 @@ proyecto**, y cinco de los seis produjeron números con cara de dato:
 | 4 | Un `cd` que **persistió entre comandos** hizo correr el medidor desde el repo equivocado; el vacío se leyó como "0 fondos detectados" y casi se reporta "el instrumento está roto en las 10 páginas". | Al notar que una página había medido bien un minuto antes |
 | 5 | El medidor imprimía **`OK` contra CERO fondos** en 6 de 10 páginas — incluida la portada, cuyo CSS vive en `src/` y **nunca se leyó**. | Mirando la línea "Fondos medidos:" vacía |
 | 6 | El medidor nuevo, hecho para terminar con todo lo anterior, reportó **1:1 en títulos con `background-clip:text`**: 8 fallos inventados de 46. | Buscando a propósito la clase de falso positivo que ese diseño podía producir |
+| 7 | Un verificador de base de datos **imprimía el nombre de la base pero no el HOST**. Producción y el ambiente de prueba se llamaban **igual** en hosts distintos → las dos corridas daban **salida idéntica** y era imposible saber cuál era cuál. El "✅ verificado" no verificaba nada. | ✅ **Antes de entregarlo**, al notar que dos ambientes opuestos imprimían lo mismo |
+
+**El caso 7 es el único que se cazó ANTES de entregar, y por eso es el más importante de la
+tabla: es la regla funcionando.** Los seis anteriores se descubrieron después de haber
+publicado un número falso. La diferencia no fue suerte — fue correr el instrumento contra un
+caso **de control conocido** en vez de sólo contra el caso que interesaba.
+
+> **Corolario operativo:** un verificador tiene que imprimir **contra qué corrió**, no sólo
+> qué encontró. Si dos entornos distintos pueden producir la misma salida, el instrumento no
+> distingue nada aunque parezca que sí.
 
 **Las tres reglas que salen de esa tabla:**
 
