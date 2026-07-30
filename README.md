@@ -91,3 +91,12 @@ Saber **cuándo una herramienta no aplica** es parte de la herramienta.
 
 [CC BY 4.0](LICENSE). Usala, adaptala, vendé lo que construyas con ella. Lo único que pide
 la licencia es atribución.
+
+**Por qué CC y no MIT:** esto es prosa que se cita y se adapta, no una librería que se
+importa. CC BY obliga a atribuir cuando alguien **comparte o adapta públicamente** el
+material — un artículo que reproduce el método, un skill derivado. MIT sólo obliga a
+conservar el aviso al **distribuir software**, que no es cómo se propaga una metodología.
+
+**Si en el futuro este repo trae código** (por ejemplo un medidor de contraste genérico):
+Creative Commons recomienda explícitamente no usar sus licencias para software, así que ese
+código iría bajo **MIT** y quedaría declarado acá. Hoy el repo es sólo Markdown.
