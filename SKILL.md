@@ -1,6 +1,6 @@
 ---
 name: formula-antislop
-description: Receta de composición para que una interfaz NO parezca hecha con IA. "Se ve IA" es un problema de RITMO, no de componentes — cambiar la librería de íconos no arregla nada. Úsala ANTES de escribir la primera línea de HTML/JSX de cualquier página, landing, sección o vista nueva, y también para auditar algo que "se ve genérico", "se ve plantilla", "se ve AI slop" o "se ve hecho con IA". Cubre romper la métrica, prueba real sobre ilustración, motivo propietario derivado de una sola idea, honestidad específica en el copy, movimiento que nunca esconde contenido, y las trampas de CSS/JS que ya costaron tiempo (padding shorthand, overflow-x, 100vw, reveal en opacity 0). INCLUYE UN PASO 0 DE TRIAGE que puede mandarte a otra herramienta: si la queja es "está feo", "me cansa la vista", "se ve plana/apagada" o "no encuentro nada", eso NO es ritmo — es legibilidad o jerarquía, y se MIDE (ver references/feo-no-es-slop.md, con el método de la escalera de contraste y las trampas del alfa, del fondo secundario y de invocar WCAG donde no aplica). Trigger words: página nueva, landing, hero, sección, rediseño, se ve IA, se ve genérico, anti-slop, lenguaje visual, ritmo visual, está feo, se ve fea, colores feos, se ve plana, me cansa la vista, contraste, jerarquía visual, legibilidad.
+description: Receta de composición para que una interfaz NO parezca hecha con IA. "Se ve IA" es un problema de RITMO, no de componentes — cambiar la librería de íconos no arregla nada. Úsala ANTES de escribir la primera línea de HTML/JSX de cualquier página, landing, sección o vista nueva, y también para auditar algo que "se ve genérico", "se ve plantilla", "se ve AI slop" o "se ve hecho con IA". Cubre romper la métrica, prueba real sobre ilustración, motivo propietario derivado de una sola idea, honestidad específica en el copy, movimiento que nunca esconde contenido, y las trampas de CSS/JS que ya costaron tiempo (padding shorthand, overflow-x, 100vw, reveal en opacity 0). INCLUYE UN PASO 0 DE TRIAGE que enruta a TRES TIPOS de criterio, y puede mandarte fuera de esta receta: Tipo A se MIDE (legibilidad, contraste, la escalera entre niveles, el alfa compuesto, la tinta que se invierte con el tema, objetivo táctil 24x24) — si la queja es "está feo", "me cansa la vista", "se ve plana/apagada" o "no encuentro nada", eso NO es ritmo y se mide, ver references/feo-no-es-slop.md; Tipo B se COMPONE y es esta fórmula (ritmo); Tipo C se VERIFICA, existe o no existe (estado que no dependa solo del color, :focus-visible diseñado, prefers-reduced-motion, UN sistema de tokens sin valores duplicados, responsive en el aparato real, copy sin posición en pantalla). Mapa completo en references/los-tres-tipos.md, que trae además la META-REGLA: cada criterio necesita un medidor y el medidor necesita su propia prueba (seis instrumentos mintieron en este proyecto, con la tabla de cómo se descubrió cada uno). Incluye scripts/medir-contraste-real.mjs, medidor portable que corre sobre el sitio SERVIDO con Chrome y mide PÍXELES REALES en vez de parsear CSS — resuelve CSS externo, tokens, alfas y gradientes de una, y SALE CON ERROR cuando no pudo medir en vez de imprimir OK vacío. Trigger words: página nueva, landing, hero, sección, rediseño, se ve IA, se ve genérico, anti-slop, lenguaje visual, ritmo visual, está feo, se ve fea, colores feos, se ve plana, me cansa la vista, contraste, jerarquía visual, legibilidad, accesibilidad, WCAG, focus visible, tokens de diseño, sistema de diseño, auditar diseño, medir contraste.
 ---
 
 # Fórmula anti-slop — lenguaje visual
@@ -30,12 +30,24 @@ problema — no en los íconos, no en la paleta, no en el copy.
 
 ## Protocolo — el orden importa
 
-0. **Triage: ¿esto es slop, o es otra cosa?** Si la queja es *"se ve genérico / plantilla /
-   hecho con IA"*, seguí. Si es *"me cansa la vista" / "no encuentro nada" / "se ve plana"*
-   —o un *"está feo"* a secas sin síntoma—, **pará: eso no es ritmo, es legibilidad o
-   jerarquía, y se MIDE.** Correr esta fórmula ahí no lo va a encontrar. Leer
-   `references/feo-no-es-slop.md`. *(Esto está acá porque ya pasó: la fórmula no encontró
-   un defecto de contraste que se arregló con tres valores de color.)*
+0. **Triage: ¿de qué TIPO es el problema?** Esta fórmula es **uno de tres tipos de
+   criterio**, no el mapa completo. Mapa entero en **`references/los-tres-tipos.md`**.
+
+   | la queja / la tarea suena a… | tipo | dónde ir |
+   |---|---|---|
+   | "se ve genérico / plantilla / hecho con IA" | **B — se COMPONE** | seguí acá, paso 1 |
+   | "me cansa la vista", "no encuentro nada", "se ve plana", o un *"está feo"* sin síntoma | **A — se MIDE** | `references/feo-no-es-slop.md` y `scripts/medir-contraste-real.mjs` |
+   | "¿esto funciona con teclado?", "¿el estado se ve sin color?", "¿tenemos un solo sistema de tokens?" | **C — se VERIFICA** | la lista de Tipo C en `references/los-tres-tipos.md` |
+
+   **La pregunta que enruta:** ¿tiene un número, tiene una forma, o tiene un estado?
+   *(Esto está acá porque ya pasó dos veces: la fórmula no encontró un defecto de contraste
+   que se arregló con tres valores de color, y el pase de ritmo estuvo a punto de hacerse
+   por el motivo equivocado.)*
+
+   **Y antes de creerle a cualquier medición, la meta-regla:** cada criterio necesita un
+   medidor y **el medidor necesita su propia prueba**. En este proyecto mintieron **seis**
+   instrumentos, uno de ellos el que se hizo para terminar con los otros cinco. La tabla
+   con los seis casos está en `references/los-tres-tipos.md`.
 1. **Instanciar el proyecto.** Antes de escribir HTML, resolver las cinco variables de
    `references/instanciar-por-proyecto.md`. La más importante es **la UNA idea** de la que
    se deriva todo lo visual. Si el proyecto no la tiene, **preguntarla — no inventarla.**
