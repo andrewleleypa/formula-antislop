@@ -75,9 +75,9 @@ está hecho. Si te sirve traducido, un PR es bienvenido.
 
 ## Origen y crédito
 
-Formulada por **Jean Carlos Ducruet** el 26 de julio de 2026, construyendo una página real
-—no en abstracto—. El caso completo, incluida la instanciación que se usó, está en
-`references/origen-alijerik.md`.
+Formulada por **[Jean Carlos Ducruet](https://alijerik.com)** el 26 de julio de 2026,
+construyendo una página real —no en abstracto—. El caso completo, incluida la instanciación
+que se usó, está en `references/origen-alijerik.md`.
 
 **Una nota que vale más que la receta:** cuatro días después de escribirla, la fórmula
 **no** sirvió para el problema que parecía suyo. Alguien reportó que una interfaz "se veía
