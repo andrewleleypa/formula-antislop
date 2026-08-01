@@ -99,6 +99,17 @@ function censar() {
     if (caja.width < 2 || caja.height < 2) continue;
 
     const cs = getComputedStyle(el);
+
+    // TRAMPA REAL, cazada el 2026-08-01 en /formula-antislop/. Un <text> de SVG NO se
+    // pinta con `color`: se pinta con `fill`. Leerle `color` devuelve el color heredado
+    // de la página, y como el paso de esconder la tinta tampoco tocaba `fill`, el texto
+    // seguía visible y se muestreaba a SÍ MISMO como fondo. Resultado: reportaba la
+    // razón entre DOS COLORES DE TEXTO como si fuera un fallo de contraste — 2.66:1
+    // sobre una etiqueta que en realidad da 6.44:1 contra el fondo de verdad. Ese
+    // número falso llegó a documentarse en un BACKLOG como defecto a corregir.
+    const esSvg = el.namespaceURI === "http://www.w3.org/2000/svg";
+    const tinta = esSvg ? cs.fill : cs.color;
+
     const sel =
       el.tagName.toLowerCase() +
       (el.id ? `#${el.id}` : "") +
@@ -118,17 +129,17 @@ function censar() {
       const bc = acs.webkitBackgroundClip || acs.backgroundClip;
       if (bc === "text") { clip = true; break; }
     }
-    const tintaTransparente = /rgba?\([^)]*,\s*0\s*\)$/.test(cs.color);
+    const tintaTransparente = /rgba?\([^)]*,\s*0\s*\)$/.test(tinta);
 
     // Deduplicar por (tinta, tamaño, peso, selector): distintas frases con el mismo
     // tratamiento son el mismo hallazgo, y repetirlas ahoga el informe.
-    const clave = `${cs.color}|${cs.fontSize}|${cs.fontWeight}|${sel}`;
+    const clave = `${tinta}|${cs.fontSize}|${cs.fontWeight}|${sel}`;
     if (vistos.has(clave)) continue;
     vistos.add(clave);
 
     items.push({
       sel,
-      tinta: cs.color,
+      tinta,
       tintaPintadaPorGradiente: !!(clip && tintaTransparente),
       px: parseFloat(cs.fontSize),
       peso: cs.fontWeight,
@@ -268,7 +279,10 @@ for (const ruta of rutas) {
       s.id = "__medidor_sin_tinta";
       s.textContent =
         "*,*::before,*::after{color:transparent!important;text-shadow:none!important;" +
-        "-webkit-text-fill-color:transparent!important;text-decoration-color:transparent!important}";
+        "-webkit-text-fill-color:transparent!important;text-decoration-color:transparent!important}" +
+        // Solo `text` y `tspan`: poner fill:transparent en `*` borraria los
+        // graficos SVG decorativos, que SI son fondo legitimo de otro texto.
+        "text,tspan{fill:transparent!important}";
       document.head.appendChild(s);
     });
 
